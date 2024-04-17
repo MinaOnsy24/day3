@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { addProducts } from '../stroe/Slices/Cart';
 
 function Main() {
   const [counter, setCounter] = useState(0)
@@ -24,16 +26,22 @@ function Main() {
   }, [])
 
 
-const navigate = useNavigate()
+  const navigate = useNavigate()
 
 
 
 
   const goToDetails = (product) => {
 
-    navigate(`/productdatails/${product.id}`,{
-      state:{product}
+    navigate(`/productdatails/${product.id}`, {
+      state: { product }
     })
+
+  }
+  
+  const dispatch = useDispatch();
+  const additem = (item) => {
+    dispatch(addProducts(item));
 
   }
 
@@ -60,6 +68,7 @@ const navigate = useNavigate()
                   <h5 className="card-title">{item.title}</h5>
                   <p className="card-text">{item.description}</p>
                   <button className="btn btn-primary" onClick={() => { goToDetails(item) }}>Go somewhere</button>
+                  <button className="btn btn-primary" onClick={() => { additem(item) }}>add</button>
                 </div>
               </div>
             </div>
